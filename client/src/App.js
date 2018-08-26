@@ -10,7 +10,7 @@ class App extends Component {
         this.autorService = new AutorService();
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.autorService.lista()
             .then(autores => this.setState({ lista: autores }))
             .catch();
@@ -73,8 +73,8 @@ class App extends Component {
                                 </thead>
                                 <tbody>
                                 {
-                                    this.state.lista.map((autor, idx) =>  (
-                                        <tr key={idx}>
+                                    this.state.lista.map((autor) =>  (
+                                        <tr key={autor.id}>
                                             <td>{autor.nome}</td>
                                             <td>{autor.email}</td>
                                         </tr>
