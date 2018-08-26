@@ -23,7 +23,7 @@ class App extends Component {
     cadastra(event) {
         event.preventDefault();
         this.autorService.salva(this.state.autor)
-            .then(mensagem => console.log(mensagem))
+            .then(autores => this.setState({ lista: autores }))
             .catch(erro => console.log(erro));
     }
 

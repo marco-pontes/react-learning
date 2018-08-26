@@ -25,7 +25,8 @@ class AutorService {
         let url = `${BASE_URL}/autores`;
         return this.httpService.post(url, dado)
             .then(resposta => {
-                return resposta;
+                let autores = resposta.map((item) => new Autor(item.id, item.nome, item.email, item.senha));
+                return autores;
             })
             .catch(erro => {
                 console.log(erro);

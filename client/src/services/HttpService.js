@@ -19,7 +19,9 @@ class HttpService {
             headers: {'Content-type': 'application/json'},
             method: 'post',
             body: JSON.stringify(dado)
-        }).then(res => this.handleErrors(res));
+        })
+            .then(res => this.handleErrors(res))
+            .then(res => res.json());
     }
 }
 
