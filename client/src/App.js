@@ -13,7 +13,14 @@ class App extends Component {
     componentDidMount() {
         this.autorService.lista()
             .then(autores => this.setState({ lista: autores }))
-            .catch();
+            .catch(erro => console.log(erro));
+    }
+
+    cadastra(event) {
+        event.preventDefault();
+        this.autorService.salva()
+            .then(mensagem => console.log(mensagem))
+            .catch(erro => console.log(erro));
     }
 
     render() {
@@ -43,7 +50,7 @@ class App extends Component {
 
                     <div className="content" id="content">
                         <div className="pure-form pure-form-aligned">
-                            <form className="pure-form pure-form-aligned">
+                            <form className="pure-form pure-form-aligned" onSubmit={this.cadastra}>
                                 <div className="pure-control-group">
                                     <label htmlFor="nome">Nome</label>
                                     <input id="nome" type="text" name="nome" value=""  />
