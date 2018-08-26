@@ -6,8 +6,12 @@ class App extends Component {
 
     constructor() {
         super();
-        this.state = { lista: [] };
+        this.state = { lista: [], autor: { nome: '', email: '', senha: '' } };
         this.autorService = new AutorService();
+        this.cadastra = this.cadastra.bind(this);
+        this.setNome = this.setNome.bind(this);
+        this.setEmail = this.setEmail.bind(this);
+        this.setSenha = this.setSenha.bind(this);
     }
 
     componentDidMount() {
@@ -18,9 +22,21 @@ class App extends Component {
 
     cadastra(event) {
         event.preventDefault();
-        this.autorService.salva()
+        this.autorService.salva(this.state.autor)
             .then(mensagem => console.log(mensagem))
             .catch(erro => console.log(erro));
+    }
+
+    setNome(event) {
+        this.setState({ autor: { ...this.state.autor, nome: event.target.value } });
+    }
+
+    setEmail(event) {
+        this.setState({ autor: { ...this.state.autor, email: event.target.value } });
+    }
+
+    setSenha(event) {
+        this.setState({ autor: { ...this.state.autor, senha: event.target.value } });
     }
 
     render() {
@@ -53,15 +69,15 @@ class App extends Component {
                             <form className="pure-form pure-form-aligned" onSubmit={this.cadastra}>
                                 <div className="pure-control-group">
                                     <label htmlFor="nome">Nome</label>
-                                    <input id="nome" type="text" name="nome" value=""  />
+                                    <input id="nome" type="text" name="nome" value={this.state.autor.nome} onChange={ this.setNome } />
                                 </div>
                                 <div className="pure-control-group">
                                     <label htmlFor="email">Email</label>
-                                    <input id="email" type="email" name="email" value=""  />
+                                    <input id="email" type="email" name="email" value={this.state.autor.email} onChange={ this.setEmail } />
                                 </div>
                                 <div className="pure-control-group">
                                     <label htmlFor="senha">Senha</label>
-                                    <input id="senha" type="password" name="senha"  />
+                                    <input id="senha" type="password" name="senha" value={this.state.autor.senha} onChange={ this.setSenha } />
                                 </div>
                                 <div className="pure-control-group">
                                     <label></label>

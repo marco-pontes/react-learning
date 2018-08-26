@@ -2,7 +2,7 @@ class HttpService {
 
     handleErrors(result) {
         if(!result.ok) {
-            throw new Error(result.status.text());
+            throw new Error(result.statusText);
         }
         return result;
 
