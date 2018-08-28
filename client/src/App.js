@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import InputCustom from './components/InputCustom'
+import SubmitCustom from './components/SubmitCustom'
 import './App.css';
 import AutorService from './services/AutorService';
 
@@ -67,22 +69,10 @@ class App extends Component {
                     <div className="content" id="content">
                         <div className="pure-form pure-form-aligned">
                             <form className="pure-form pure-form-aligned" onSubmit={this.cadastra}>
-                                <div className="pure-control-group">
-                                    <label htmlFor="nome">Nome</label>
-                                    <input id="nome" type="text" name="nome" value={this.state.autor.nome} onChange={ this.setNome } />
-                                </div>
-                                <div className="pure-control-group">
-                                    <label htmlFor="email">Email</label>
-                                    <input id="email" type="email" name="email" value={this.state.autor.email} onChange={ this.setEmail } />
-                                </div>
-                                <div className="pure-control-group">
-                                    <label htmlFor="senha">Senha</label>
-                                    <input id="senha" type="password" name="senha" value={this.state.autor.senha} onChange={ this.setSenha } />
-                                </div>
-                                <div className="pure-control-group">
-                                    <label></label>
-                                    <button type="submit" className="pure-button pure-button-primary">Gravar</button>
-                                </div>
+                                <InputCustom label="Nome" id="nome" type="text" name="nome" value={ this.state.autor.nome } onChange={ this.setNome } />
+                                <InputCustom label="Email" id="email" type="email" name="email" value={ this.state.autor.email } onChange={ this.setEmail } />
+                                <InputCustom label="Senha" id="senha" type="password" name="senha" value={ this.state.autor.senha } onChange={ this.setSenha } />
+                                <SubmitCustom label="Gravar" />
                             </form>
 
                         </div>

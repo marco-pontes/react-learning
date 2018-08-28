@@ -1,5 +1,5 @@
 import HttpService from './HttpService';
-import Autor from '../Autor';
+import Autor from '../models/Autor';
 
 let BASE_URL = 'http://localhost:8080/api';
 
