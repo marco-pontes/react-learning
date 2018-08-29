@@ -18,7 +18,7 @@ class FormularioAutor extends Component {
     cadastra(event) {
         event.preventDefault();
         this.autorService.salva(this.state.autor)
-            .then(autores => this.setState({ lista: autores }))
+            .then(autores => this.props.atualizaListagem(autores))
             .catch(erro => console.log(erro));
     }
 
@@ -52,18 +52,6 @@ class FormularioAutor extends Component {
 
 class TabelaAutores extends Component {
 
-    constructor() {
-        super();
-        this.state = { lista: [] };
-        this.autorService = new AutorService();
-    }
-
-    componentDidMount() {
-        this.autorService.lista()
-            .then(autores => this.setState({ lista: autores }))
-            .catch(erro => console.log(erro));
-    }
-
     render() {
         return (
             <div>
@@ -76,7 +64,7 @@ class TabelaAutores extends Component {
                     </thead>
                     <tbody>
                     {
-                        this.state.lista.map((autor) =>  (
+                        this.props.lista.map((autor) =>  (
                                 <tr key={autor.id}>
                                     <td>{autor.nome}</td>
                                     <td>{autor.email}</td>
@@ -92,7 +80,33 @@ class TabelaAutores extends Component {
 
 }
 
-export {
-    FormularioAutor,
-    TabelaAutores,
+class AutorBox extends Component {
+
+    constructor() {
+        super();
+        this.state = { lista: [] };
+        this.autorService = new AutorService();
+        this.atualizaListagem = this.atualizaListagem.bind(this);
+    }
+
+    componentDidMount() {
+        this.autorService.lista()
+            .then(autores => this.setState({ lista: autores }))
+            .catch(erro => console.log(erro));
+    }
+
+    atualizaListagem(autores) {
+        this.setState({ lista: autores })
+    }
+
+    render () {
+        return (
+            <div>
+                <FormularioAutor atualizaListagem={this.atualizaListagem} />
+                <TabelaAutores lista={this.state.lista}  />
+            </div>
+        );
+    }
 }
+
+export default AutorBox;

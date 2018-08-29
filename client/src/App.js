@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { FormularioAutor, TabelaAutores } from './components/Autor';
+import AutorBox  from './components/AutorBox';
 
 class App extends Component {
 
@@ -30,8 +30,7 @@ class App extends Component {
                     </div>
 
                     <div className="content" id="content">
-                        <FormularioAutor />
-                        <TabelaAutores />
+                        <AutorBox />
                     </div>
                 </div>
             </div>
