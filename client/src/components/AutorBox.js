@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AutorService from '../services/AutorService';
 import InputCustom from './InputCustom';
 import SubmitCustom from './SubmitCustom';
+import PubSub from 'pubsub-js';
 
 class FormularioAutor extends Component {
 
@@ -18,7 +19,7 @@ class FormularioAutor extends Component {
     cadastra(event) {
         event.preventDefault();
         this.autorService.salva(this.state.autor)
-            .then(autores => this.props.atualizaListagem(autores))
+            .then(autores => PubSub.publish('atualiza-listagem-autores', autores  ))
             .catch(erro => console.log(erro));
     }
 
@@ -93,16 +94,17 @@ class AutorBox extends Component {
         this.autorService.lista()
             .then(autores => this.setState({ lista: autores }))
             .catch(erro => console.log(erro));
+        PubSub.subscribe('atualiza-listagem-autores', this.atualizaListagem)
     }
 
-    atualizaListagem(autores) {
+    atualizaListagem(topico, autores) {
         this.setState({ lista: autores })
     }
 
     render () {
         return (
             <div>
-                <FormularioAutor atualizaListagem={this.atualizaListagem} />
+                <FormularioAutor />
                 <TabelaAutores lista={this.state.lista}  />
             </div>
         );
