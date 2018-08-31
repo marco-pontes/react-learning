@@ -6,33 +6,26 @@ class App extends Component {
 
     render() {
         return (
-            <div id="layout">
-                <a href="#menu" id="menuLink" className="menu-link">
-
-                    <span></span>
-                </a>
+            <div>
 
                 <div id="menu">
-                    <div className="pure-menu">
-                        <a className="pure-menu-heading" href="home">Company</a>
-
-                        <ul className="pure-menu-list">
-                            <li className="pure-menu-item"><a href="home" className="pure-menu-link">Home</a></li>
-                            <li className="pure-menu-item"><a href="autor" className="pure-menu-link">Autor</a></li>
-                            <li className="pure-menu-item"><a href="livros" className="pure-menu-link">Livros</a></li>
-                        </ul>
+                    <div className="nav-scroller bg-white shadow-sm">
+                        <nav className="nav nav-underline">
+                            <a className="nav-link active" href="home">Home</a>
+                            <a className="nav-link" href="autor">Autor</a>
+                            <a className="nav-link" href="livros">Livros</a>
+                        </nav>
                     </div>
                 </div>
 
-                <div id="main">
-                    <div className="header">
-                        <h1>Cadastro de Autores</h1>
+                <main id="main" className="container">
+                    <div className="my-3 p-3 bg-white rounded shadow-sm">
+                        <h6 className="border-bottom border-gray pb-2 mb-0">Cadastro de Autores</h6>
+                        <div className="pt-3">
+                            <AutorBox />
+                        </div>
                     </div>
-
-                    <div className="content" id="content">
-                        <AutorBox />
-                    </div>
-                </div>
+                </main>
             </div>
         );
     }

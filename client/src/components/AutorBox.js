@@ -11,41 +11,43 @@ class FormularioAutor extends Component {
         this.state = { autor: { nome: '', email: '', senha: '' } };
         this.autorService = new AutorService();
         this.cadastra = this.cadastra.bind(this);
-        this.setNome = this.setNome.bind(this);
-        this.setEmail = this.setEmail.bind(this);
-        this.setSenha = this.setSenha.bind(this);
+        this.onFieldChange = this.onFieldChange.bind(this);
+        this.onClick = this.onClick.bind(this);
     }
 
     cadastra(event) {
         event.preventDefault();
         this.autorService.salva(this.state.autor)
-            .then(autores => PubSub.publish('atualiza-listagem-autores', autores  ))
-            .catch(erro => console.log(erro));
+            .then(autores => {
+                PubSub.publish('atualiza-listagem-autores', autores);
+                this.setState({ autor: { nome: '', email: '', senha: '' } });
+            })
+            .catch(erro => {
+            });
     }
 
-    setNome(event) {
-        this.setState({ autor: { ...this.state.autor, nome: event.target.value } });
+    onFieldChange(prop, event) {
+        let autor = { ...this.state.autor };
+        autor[prop] = event.target.value;
+        this.setState({ autor: autor });
     }
 
-    setEmail(event) {
-        this.setState({ autor: { ...this.state.autor, email: event.target.value } });
+    isBlank (prop) {
+        return this.state.autor[prop] === '';
     }
 
-    setSenha(event) {
-        this.setState({ autor: { ...this.state.autor, senha: event.target.value } });
+    onClick () {
+        this.setState({ ...this.state});
     }
 
     render() {
         return (
-            <div className="pure-form pure-form-aligned">
-                <form className="pure-form pure-form-aligned" onSubmit={this.cadastra}>
-                    <InputCustom label="Nome" id="nome" type="text" name="nome" value={ this.state.autor.nome } onChange={ this.setNome } />
-                    <InputCustom label="Email" id="email" type="email" name="email" value={ this.state.autor.email } onChange={ this.setEmail } />
-                    <InputCustom label="Senha" id="senha" type="password" name="senha" value={ this.state.autor.senha } onChange={ this.setSenha } />
-                    <SubmitCustom label="Gravar" />
-                </form>
-
-            </div>
+            <form  onSubmit={this.cadastra}>
+                <InputCustom label="Nome" invalid={this.isBlank('nome')} id="nome" type="text" name="nome" value={ this.state.autor.nome } onChange={ this.onFieldChange } />
+                <InputCustom label="Email" invalid={this.isBlank('email')} id="email" type="email" name="email" value={ this.state.autor.email } onChange={ this.onFieldChange } />
+                <InputCustom label="Senha" invalid={this.isBlank('senha')} id="senha" type="password" name="senha" value={ this.state.autor.senha } onChange={ this.onFieldChange } />
+                <SubmitCustom label="Gravar" onClick={this.onClick} />
+            </form>
         );
     }
 
@@ -55,8 +57,8 @@ class TabelaAutores extends Component {
 
     render() {
         return (
-            <div>
-                <table className="pure-table">
+            <div className="my-3 p-3 ">
+                <table className="table table-hover table-striped table-sm">
                     <thead>
                     <tr>
                         <th>Nome</th>

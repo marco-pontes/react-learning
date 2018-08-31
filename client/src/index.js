@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './css/pure-min.css';
-import './css/side-menu.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-grid.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 

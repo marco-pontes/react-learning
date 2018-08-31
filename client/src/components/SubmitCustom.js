@@ -6,7 +6,7 @@ class SubmitCustom extends Component {
         return (
             <div className="pure-control-group">
                 <label></label>
-                <button type="submit" className="pure-button pure-button-primary">{this.props.label}</button>
+                <button type="submit" onClick={ this.props.onClick } className="btn btn-primary">{this.props.label}</button>
             </div>
         );
     }
