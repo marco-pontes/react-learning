@@ -8,45 +8,81 @@ class FormularioAutor extends Component {
 
     constructor() {
         super();
-        this.state = { autor: { nome: '', email: '', senha: '' } };
+        this.fields = ['nome', 'email', 'senha'];
+        let autor = {};
+        this.fields.forEach(prop => autor[prop] = { value: '', edited: false, blank: true, valid: true });
+        this.state = { autor: autor };
         this.autorService = new AutorService();
         this.cadastra = this.cadastra.bind(this);
         this.onFieldChange = this.onFieldChange.bind(this);
-        this.onClick = this.onClick.bind(this);
     }
 
     cadastra(event) {
         event.preventDefault();
-        this.autorService.salva(this.state.autor)
+        this.autorService.salva(this.getDado())
             .then(autores => {
                 PubSub.publish('atualiza-listagem-autores', autores);
-                this.setState({ autor: { nome: '', email: '', senha: '' } });
+                let state = { ...this.state };
+                this.fields.forEach(prop => state.autor[prop] = { value: '', edited: false, blank: false, valid: true });
+                this.setState(state);
             })
             .catch(erro => {
             });
     }
 
+    getDado() {
+        let dado = {};
+        this.fields.forEach(prop => dado[prop] = this.state.autor[prop].value );
+        return dado;
+    }
+
     onFieldChange(prop, event) {
-        let autor = { ...this.state.autor };
-        autor[prop] = event.target.value;
-        this.setState({ autor: autor });
-    }
-
-    isBlank (prop) {
-        return this.state.autor[prop] === '';
-    }
-
-    onClick () {
-        this.setState({ ...this.state});
+        let state = { ...this.state };
+        let isBlank = event.target.value === '';
+        state.autor[prop].value = event.target.value;
+        state.autor[prop].edited = true;
+        state.autor[prop].blank = isBlank;
+        state.autor[prop].valid = !isBlank;
+        this.setState(state);
     }
 
     render() {
         return (
             <form  onSubmit={this.cadastra}>
-                <InputCustom label="Nome" invalid={this.isBlank('nome')} id="nome" type="text" name="nome" value={ this.state.autor.nome } onChange={ this.onFieldChange } />
-                <InputCustom label="Email" invalid={this.isBlank('email')} id="email" type="email" name="email" value={ this.state.autor.email } onChange={ this.onFieldChange } />
-                <InputCustom label="Senha" invalid={this.isBlank('senha')} id="senha" type="password" name="senha" value={ this.state.autor.senha } onChange={ this.onFieldChange } />
-                <SubmitCustom label="Gravar" onClick={this.onClick} />
+                <InputCustom
+                    label="Nome"
+                    id="nome"
+                    type="text"
+                    name="nome"
+                    invalidMessage="O campo nome não pode ser deixado em branco"
+                    valid={this.state.autor.nome.valid}
+                    value={ this.state.autor.nome.value }
+                    onChange={ this.onFieldChange }
+                />
+
+                <InputCustom
+                    label="Email"
+                    id="email"
+                    type="email"
+                    name="email"
+                    invalidMessage="O campo email não pode ser deixado em branco"
+                    valid={this.state.autor.email.valid}
+                    value={ this.state.autor.email.value }
+                    onChange={ this.onFieldChange }
+                />
+
+                <InputCustom
+                    label="Senha"
+                    id="senha"
+                    type="password"
+                    name="senha"
+                    invalidMessage="O campo senha não pode ser deixado em branco"
+                    valid={this.state.autor.senha.valid}
+                    value={ this.state.autor.senha.value }
+                    onChange={ this.onFieldChange }
+                />
+
+                <SubmitCustom label="Gravar" />
             </form>
         );
     }

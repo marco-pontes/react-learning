@@ -14,13 +14,13 @@ class InputCustom extends Component {
             <div className="form-group row">
                 <label className="col-sm-2 col-form-label" htmlFor={ this.props.id }>{ this.props.label }</label>
                 <div className="col-sm-10">
-                    <input className={"form-control " + (this.props.invalid && this.state.edited ? 'is-invalid' : '')}
+                    <input className={"form-control " + (this.props.valid ? '' : 'is-invalid')}
                            id={ this.props.id } type={ this.props.type }
                            name={ this.props.name }
                            value={ this.props.value }
-                           onChange={(e) => { this.props.onChange(this.props.name, e); this.setState({ edited: true }) } }
+                           onChange={(e) => { this.props.onChange(this.props.name, e) } }
                     />
-                    <InvalidFeedBack invalid={this.props.invalid && this.state.edited} />
+                    <InvalidFeedBack valid={this.props.valid} invalidMessage={this.props.invalidMessage} />
                 </div>
             </div>
         );
@@ -29,11 +29,11 @@ class InputCustom extends Component {
 }
 
 function InvalidFeedBack(props) {
-    const invalid = props.invalid;
-    if (invalid) {
+    const valid = props.valid;
+    if (!valid) {
         return (
             <div className="invalid-feedback">
-                Please provide a valid city.
+                {props.invalidMessage}
             </div>
         );
     }
