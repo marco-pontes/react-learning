@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class LivroBox extends Component {
+class HomeBox extends Component {
 
     constructor() {
         super();
@@ -9,7 +9,7 @@ class LivroBox extends Component {
     render () {
         return (
             <div className="my-3 p-3 bg-white rounded shadow-sm">
-                <h6 className="border-bottom border-gray pb-2 mb-0">Cadastro de Livros</h6>
+                <h6 className="border-bottom border-gray pb-2 mb-0">Home</h6>
                 <div className="pt-3">
                 </div>
             </div>
@@ -17,4 +17,4 @@ class LivroBox extends Component {
     }
 }
 
-export default LivroBox;
+export default HomeBox;

@@ -141,9 +141,12 @@ class AutorBox extends Component {
 
     render () {
         return (
-            <div>
-                <FormularioAutor />
-                <TabelaAutores lista={this.state.lista}  />
+            <div className="my-3 p-3 bg-white rounded shadow-sm">
+                <h6 className="border-bottom border-gray pb-2 mb-0">Cadastro de Autores</h6>
+                <div className="pt-3">
+                    <FormularioAutor />
+                    <TabelaAutores lista={this.state.lista}  />
+                </div>
             </div>
         );
     }
