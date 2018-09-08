@@ -14,10 +14,8 @@ class InputCustom extends Component {
             <div className="form-group row">
                 <label className="col-sm-2 col-form-label" htmlFor={ this.props.id }>{ this.props.label }</label>
                 <div className="col-sm-10">
-                    <input className={"form-control " + (this.props.valid ? '' : 'is-invalid')}
-                           id={ this.props.id } type={ this.props.type }
-                           name={ this.props.name }
-                           value={ this.props.value }
+                    <input { ...this.props }
+                           className={"form-control " + (this.props.valid ? '' : 'is-invalid')}
                            onChange={(e) => { this.props.onChange(this.props.name, e) } }
                     />
                     <InvalidFeedBack valid={this.props.valid} invalidMessage={this.props.invalidMessage} />
